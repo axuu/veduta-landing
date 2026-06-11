@@ -1,16 +1,33 @@
 ---
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
 const brew = 'brew install --cask giraphant/tap/veduta';
 const repo = 'https://github.com/giraphant/veduta';
+const copied = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
+const copyFail = lang === 'zh' ? '请按 ⌘C 复制' : 'Press ⌘C to copy';
 ---
 
 <section class="get" id="get">
   <div class="shell">
     <div class="get__panel" data-reveal>
-      <h2 class="get__title">Bring the view home.</h2>
-      <p class="get__sub label">One command. No account. macOS 13 and up.</p>
+      <h2 class="get__title">{t.get.title}</h2>
+      <p class="get__sub label">{t.get.sub}</p>
 
       <div class="get__cta">
-        <button class="cmd cmd--lg" type="button" data-copy={brew} aria-label={`Copy: ${brew}`}>
+        <button
+          class="cmd cmd--lg"
+          type="button"
+          data-copy={brew}
+          data-copied={copied}
+          data-copyfail={copyFail}
+          aria-label={`${lang === 'zh' ? '复制' : 'Copy'}: ${brew}`}
+        >
           <span class="cmd__prompt mono" aria-hidden="true">$</span>
           <span class="cmd__text mono">{brew}</span>
           <span class="cmd__icon" aria-hidden="true">
@@ -21,7 +38,7 @@ const repo = 'https://github.com/giraphant/veduta';
           </span>
         </button>
         <a class="ghost-link" href={repo} rel="noopener">
-          View on GitHub
+          {t.get.github}
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
             <path d="M4 12L12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
@@ -38,31 +55,27 @@ const repo = 'https://github.com/giraphant/veduta';
         <span class="foot__word">
           Veduta <span class="foot__cn">淡景</span>
         </span>
-        <p class="foot__tag label">
-          A local-first macOS wallpaper app for public-domain and museum artwork.
-        </p>
-        <p class="foot__credit label">
-          Artwork shown: Open Access, The Metropolitan Museum of Art (CC0).
-        </p>
+        <p class="foot__tag label">{t.footer.tagline}</p>
+        <p class="foot__credit label">{t.footer.credit}</p>
       </div>
 
-      <nav class="foot__cols" aria-label="Footer">
+      <nav class="foot__cols" aria-label={lang === 'zh' ? '页脚' : 'Footer'}>
         <div class="foot__col">
-          <span class="foot__col-h">Project</span>
-          <a href="https://github.com/giraphant/veduta" rel="noopener">GitHub</a>
-          <a href="https://github.com/giraphant/veduta/releases" rel="noopener">Releases</a>
-          <a href="https://github.com/giraphant/veduta#readme" rel="noopener">Read me</a>
+          <span class="foot__col-h">{t.footer.colProject}</span>
+          <a href="https://github.com/giraphant/veduta" rel="noopener">{t.footer.linkGithub}</a>
+          <a href="https://github.com/giraphant/veduta/releases" rel="noopener">{t.footer.linkReleases}</a>
+          <a href="https://github.com/giraphant/veduta#readme" rel="noopener">{t.footer.linkReadme}</a>
         </div>
         <div class="foot__col">
-          <span class="foot__col-h">Provenance</span>
-          <a href="https://www.metmuseum.org/about-the-met/policies-and-documents/open-access" rel="noopener">Open Access</a>
-          <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener">CC0 / Public domain</a>
+          <span class="foot__col-h">{t.footer.colProv}</span>
+          <a href="https://www.metmuseum.org/about-the-met/policies-and-documents/open-access" rel="noopener">{t.footer.linkOpenAccess}</a>
+          <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener">{t.footer.linkCC0}</a>
         </div>
       </nav>
     </div>
 
     <div class="shell foot__base">
-      <span class="label">Built local-first. The art belongs to everyone.</span>
+      <span class="label">{t.footer.base}</span>
       <span class="label foot__colophon">
         Schibsted Grotesk &middot; Spectral &middot; Spline Sans Mono
       </span>

@@ -1,29 +1,21 @@
 ---
-const museums = [
-  'The Metropolitan Museum of Art',
-  'National Gallery of Art',
-  'The Cleveland Museum of Art',
-  'Art Institute of Chicago',
-  'Harvard Art Museums',
-];
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="sources">
   <div class="shell">
     <div class="sources__inner" data-reveal>
-      <p class="sources__intro label">Drawn from the open collections of</p>
+      <p class="sources__intro label">{t.sources.intro}</p>
       <ul class="sources__list">
-        {
-          museums.map((m) => (
-            <li class="sources__museum">{m}</li>
-          ))
-        }
+        {t.sources.museums.map((m) => <li class="sources__museum">{m}</li>)}
       </ul>
-      <p class="sources__note label measure">
-        Veduta only imports works the museums have released as open access. Each image is
-        public domain or museum-provided, and its provenance travels with it in the catalog.
-        The art belongs to everyone; the app just hangs it.
-      </p>
+      <p class="sources__note label measure">{t.sources.note}</p>
     </div>
   </div>
 </section>

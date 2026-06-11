@@ -1,19 +1,18 @@
 ---
 import '../styles/global.css';
+import type { Lang } from '../i18n/ui';
 
 interface Props {
-  title?: string;
-  description?: string;
+  lang?: Lang;
+  title: string;
+  description: string;
 }
 
-const {
-  title = 'Veduta · 淡景 — Museum art on your Mac desktop',
-  description = 'Veduta is a local-first, open-source macOS menu-bar app that rotates public-domain museum paintings as your wallpaper. One brew command, no account, works offline.',
-} = Astro.props;
+const { lang = 'en', title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang === 'zh' ? 'zh-Hans' : 'en'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,6 +20,10 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1a2622" />
+
+    <link rel="alternate" hreflang="en" href={new URL('/', Astro.site)} />
+    <link rel="alternate" hreflang="zh-Hans" href={new URL('/zh/', Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

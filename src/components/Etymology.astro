@@ -1,40 +1,45 @@
 ---
 import { Image } from 'astro:assets';
 import detail from '../assets/art/canaletto-piazza-san-marco.jpg';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const capAlt =
+  lang === 'zh'
+    ? '卡纳莱托《圣马可广场》局部，大教堂沐浴在晨光的暖意中。'
+    : "A detail of Canaletto's Piazza San Marco, the basilica warm in morning light.";
 ---
 
 <section class="etym">
   <div class="shell etym__grid">
     <div class="etym__text" data-reveal>
       <p class="etym__word">
-        <span class="etym__term">veduta</span>
-        <span class="etym__pron mono">/veˈduːta/</span>
-        <span class="etym__pos">noun, Italian</span>
+        <span class="etym__term">{t.etym.term}</span>
+        <span class="etym__pron mono">{t.etym.pron}</span>
+        <span class="etym__pos">{t.etym.pos}</span>
       </p>
-      <p class="etym__def">
-        A detailed, faithful painting of a city or a place, made in eighteenth-century
-        Venice for travelers who wanted to carry the view home. Canaletto painted them by the
-        hundred.
-      </p>
-      <p class="etym__cn">淡景 &mdash; <span class="etym__cn-gloss">the quiet view.</span></p>
-      <p class="etym__close">
-        Three centuries on, Veduta does the same small thing: it brings the view home, to
-        your desk.
-      </p>
+      <p class="etym__def">{t.etym.def}</p>
+      <p class="etym__cn">淡景 &middot; <span class="etym__cn-gloss">{t.etym.cnGloss}</span></p>
+      <p class="etym__close">{t.etym.close}</p>
     </div>
 
     <figure class="etym__plate" data-reveal style="--reveal-delay: 120ms">
       <div class="frame frame--tall">
         <Image
           src={detail}
-          alt="A detail of Canaletto's Piazza San Marco, the basilica warm in morning light."
+          alt={capAlt}
           widths={[420, 680, 960]}
           sizes="(max-width: 880px) 70vw, 34vw"
           class="frame__img"
         />
       </div>
       <figcaption class="etym__cap label">
-        Canaletto, <span class="etym__cap-i">Piazza San Marco</span>, late 1720s
+        {t.etym.capArtist}, <span class="etym__cap-i">{t.etym.capTitle}</span>, {t.etym.capDate}
       </figcaption>
     </figure>
   </div>
@@ -118,9 +123,6 @@ import detail from '../assets/art/canaletto-piazza-san-marco.jpg';
     max-width: 46ch;
   }
 
-  .frame--tall {
-    max-width: 22rem;
-  }
   .etym__cap {
     margin-top: 1rem;
     font-style: italic;

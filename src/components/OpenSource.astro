@@ -1,28 +1,18 @@
 ---
-const points = [
-  {
-    title: 'Two clean parts',
-    body: 'A Python pipeline that imports from museum open-access APIs, and a Swift menu-bar app that shows the result. Read or fork either one.',
-  },
-  {
-    title: 'Run your own mirror',
-    body: 'Host the library on your own box and point the app at it. The streaming origin is just a static file server.',
-  },
-  {
-    title: 'Bring your own keys',
-    body: 'Most sources are fully open. Harvard wants a free API key; everything else imports without one.',
-  },
-];
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="oss" id="open-source">
   <div class="shell oss__grid">
     <div class="oss__intro" data-reveal>
-      <h2 class="section-title">Open source, all the way down.</h2>
-      <p class="oss__lede label measure">
-        Nothing here is a black box. Install the signed app with one command, or clone the
-        repo and build the whole library from the source museums yourself.
-      </p>
+      <h2 class="section-title">{t.oss.title}</h2>
+      <p class="oss__lede label measure">{t.oss.lede}</p>
 
       <div class="terminal" data-reveal style="--reveal-delay: 100ms">
         <div class="terminal__bar" aria-hidden="true">
@@ -31,24 +21,21 @@ const points = [
           <span class="terminal__dot"></span>
           <span class="terminal__name mono">zsh — veduta</span>
         </div>
-        <pre class="terminal__body mono"><code><span class="c">{'# install the signed, notarized app'}</span>
+        <pre class="terminal__body mono"><code><span class="c">{t.oss.termInstall}</span>
 <span class="p">$</span> brew install --cask giraphant/tap/veduta
 
-<span class="c">{'# or build the library from source'}</span>
+<span class="c">{t.oss.termBuild}</span>
 <span class="p">$</span> git clone https://github.com/giraphant/veduta
 <span class="p">$</span> make import-met
 <span class="p">$</span> make import-cleveland
-<span class="o">  imported 1,204 works · cached to ~/Pictures/VedutaLibrary</span></code></pre>
+<span class="o">{t.oss.termOutput}</span></code></pre>
       </div>
-      <p class="oss__req label">
-        Requires macOS 13+, Swift 5.9+ and Python 3.11+ to build. The app alone needs none of
-        that.
-      </p>
+      <p class="oss__req label">{t.oss.req}</p>
     </div>
 
     <ul class="oss__points" data-reveal style="--reveal-delay: 80ms">
       {
-        points.map((p) => (
+        t.oss.points.map((p) => (
           <li class="oss__point">
             <h3 class="oss__point-title">{p.title}</h3>
             <p class="oss__point-body label">{p.body}</p>

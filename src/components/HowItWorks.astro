@@ -1,32 +1,20 @@
 ---
-const steps = [
-  {
-    n: '01',
-    title: 'Stream once',
-    body: 'The first time a painting comes up, Veduta pulls it from a public mirror. Just that one piece, just once.',
-  },
-  {
-    n: '02',
-    title: 'Cache on disk',
-    body: 'It lands in your library as a real image file. Every time after that, there is no network at all.',
-  },
-  {
-    n: '03',
-    title: 'Rotate quietly',
-    body: 'Your wallpaper changes on the interval you choose. Shuffle a collection, or pin the one you can’t part with.',
-  },
-];
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="how" id="how">
   <div class="shell">
-    <h2 class="section-title how__title" data-reveal>
-      Online for a moment, yours for good.
-    </h2>
+    <h2 class="section-title how__title" data-reveal>{t.how.title}</h2>
 
     <ol class="flow">
       {
-        steps.map((s, i) => (
+        t.how.steps.map((s, i) => (
           <li class="flow__step" data-reveal style={`--reveal-delay: ${i * 110}ms`}>
             <span class="flow__node mono">{s.n}</span>
             <h3 class="flow__step-title">{s.title}</h3>

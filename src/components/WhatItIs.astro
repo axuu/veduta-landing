@@ -1,6 +1,18 @@
 ---
 import { Image } from 'astro:assets';
 import canaletto from '../assets/art/canaletto-grand-canal-rialto.jpg';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const plateAlt =
+  lang === 'zh'
+    ? "卡纳莱托《大运河》局部：宫邸立面与贡多拉倒映在平静的水面上。"
+    : "A detail of Canaletto's Grand Canal: palace facades and gondolas mirrored in still water.";
 ---
 
 <section class="what" id="what">
@@ -9,40 +21,27 @@ import canaletto from '../assets/art/canaletto-grand-canal-rialto.jpg';
       <div class="frame">
         <Image
           src={canaletto}
-          alt="A detail of Canaletto's Grand Canal: palace facades and gondolas mirrored in still water."
+          alt={plateAlt}
           widths={[480, 760, 1100]}
           sizes="(max-width: 880px) 90vw, 44vw"
           class="frame__img"
         />
       </div>
-      <figcaption class="what__plate-cap label">
-        Your wallpaper, a moment ago. Now it lives in <span class="mono">~/Pictures</span>.
-      </figcaption>
+      <figcaption class="what__plate-cap label" set:html={t.what.cap} />
     </figure>
 
     <div class="what__copy" data-reveal style="--reveal-delay: 90ms">
-      <h2 class="section-title what__title">
-        It lives in the menu bar and keeps the collection in your Pictures folder.
-      </h2>
-      <p class="what__body label measure">
-        Veduta builds a library at <span class="mono">~/Pictures/VedutaLibrary</span>: a
-        catalog, the collections you choose, and the paintings themselves. When a piece
-        isn&rsquo;t on your Mac yet, it streams once from a public mirror, caches it, and from
-        then on it is yours, offline.
-      </p>
+      <h2 class="section-title what__title">{t.what.title}</h2>
+      <p class="what__body label measure" set:html={t.what.body} />
       <ul class="what__list">
-        <li>
-          <span class="what__k">No account, no cloud</span>
-          <span class="what__v label">Nothing to sign in to. Nothing leaves your machine.</span>
-        </li>
-        <li>
-          <span class="what__k">Yours on disk</span>
-          <span class="what__v label">Real image files you can open, copy, or back up like any other.</span>
-        </li>
-        <li>
-          <span class="what__k">Quiet by design</span>
-          <span class="what__v label">A single menu-bar icon. No dock clutter, no notifications, no telemetry.</span>
-        </li>
+        {
+          t.what.items.map((item) => (
+            <li>
+              <span class="what__k">{item.k}</span>
+              <span class="what__v label">{item.v}</span>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </div>
@@ -62,31 +61,6 @@ import canaletto from '../assets/art/canaletto-grand-canal-rialto.jpg';
 
   .what__plate {
     margin: 0;
-  }
-
-  /* gilt frame, never a flat band */
-  .frame {
-    position: relative;
-    padding: clamp(8px, 1vw, 14px);
-    border-radius: 3px;
-    background: var(--frame-grad);
-    box-shadow:
-      0 1px 0 0 var(--brass-bright) inset,
-      0 30px 60px -28px rgba(0, 0, 0, 0.9),
-      0 10px 24px -16px rgba(0, 0, 0, 0.7);
-  }
-  .frame::after {
-    content: '';
-    position: absolute;
-    inset: clamp(8px, 1vw, 14px);
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
-    pointer-events: none;
-  }
-  .frame__img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 1px;
   }
 
   .what__plate-cap {
@@ -130,7 +104,9 @@ import canaletto from '../assets/art/canaletto-grand-canal-rialto.jpg';
     font-size: var(--step-0);
     line-height: 1.5;
   }
-  .mono {
+  /* the path is injected via set:html, so pierce the scope to reach it */
+  .what__body :global(.mono),
+  .what__plate-cap :global(.mono) {
     color: var(--brass);
   }
 

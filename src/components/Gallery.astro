@@ -1,15 +1,21 @@
 ---
 import { Image } from 'astro:assets';
 import { gallery } from '../data/artworks';
+import { useTranslations, pick, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="library" id="library">
   <div class="shell">
     <div class="library__head">
-      <h2 class="section-title" data-reveal>A wall you keep adding to.</h2>
+      <h2 class="section-title" data-reveal>{t.gallery.title}</h2>
       <p class="library__lede label measure" data-reveal style="--reveal-delay: 80ms">
-        Every piece is public domain, drawn from museum open-access collections. Hang the
-        ones you love, filter by collection, and let them rotate. A few from the shelf:
+        {t.gallery.lede}
       </p>
     </div>
 
@@ -22,16 +28,16 @@ import { gallery } from '../data/artworks';
             <div class="piece__frame frame">
               <Image
                 src={art.src}
-                alt={art.alt}
+                alt={pick(art.alt, lang)}
                 widths={[360, 560, 800]}
                 sizes="(max-width: 620px) 88vw, (max-width: 980px) 44vw, 30vw"
                 class="frame__img"
               />
             </div>
             <figcaption class="piece__label">
-              <span class="piece__artist">{art.artist}</span>
-              <span class="piece__title">{art.title}</span>
-              <span class="piece__meta mono">{art.date} &middot; {art.source}</span>
+              <span class="piece__artist">{pick(art.artist, lang)}</span>
+              <span class="piece__title">{pick(art.title, lang)}</span>
+              <span class="piece__meta mono">{pick(art.date, lang)} &middot; {pick(art.source, lang)}</span>
             </figcaption>
           </figure>
         ))

@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import Site from '../../components/Site.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'zh';
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={t.meta.title} description={t.meta.desc}>
+  <Site lang={lang} />
+</Base>

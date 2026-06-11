@@ -1,28 +1,25 @@
 ---
 import { Image } from 'astro:assets';
 import wallpaper from '../assets/art/church-heart-of-andes.jpg';
+import { gallery } from '../data/artworks';
+import { useTranslations, pick, type Lang } from '../i18n/ui';
 
-const specs = [
-  'No account, no sign-in',
-  'No telemetry, no analytics, ever',
-  'Launches at login, lives in the menu bar',
-  'Rotate from every minute to once a day',
-  'macOS 13 or later, Apple silicon and Intel',
-];
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const church = gallery.find((a) => a.title.en === 'Heart of the Andes')!;
 ---
 
 <section class="app">
   <div class="shell app__grid">
     <div class="app__copy" data-reveal>
-      <h2 class="section-title">It asks for nothing.</h2>
-      <p class="app__lede label measure">
-        Veduta is the rare utility that wants nothing from you. No login, no subscription, no
-        analytics pinging home. It sits in the menu bar, changes your wallpaper on your
-        schedule, and otherwise stays out of the way.
-      </p>
+      <h2 class="section-title">{t.app.title}</h2>
+      <p class="app__lede label measure">{t.app.lede}</p>
       <ul class="app__specs">
         {
-          specs.map((s) => (
+          t.app.specs.map((s) => (
             <li>
               <span class="app__tick" aria-hidden="true">
                 <svg viewBox="0 0 16 16" width="13" height="13">
@@ -37,7 +34,7 @@ const specs = [
     </div>
 
     <div class="app__shot-wrap" data-reveal style="--reveal-delay: 120ms">
-      <div class="desktop" role="img" aria-label="The Veduta menu open on a macOS desktop, showing Frederic Church's Heart of the Andes as the current wallpaper.">
+      <div class="desktop" role="img" aria-label={t.app.shotAlt}>
         <Image src={wallpaper} alt="" widths={[700, 1100, 1500]} sizes="(max-width: 980px) 92vw, 52vw" class="desktop__wall" />
         <div class="desktop__tint" aria-hidden="true"></div>
 
@@ -64,16 +61,16 @@ const specs = [
           <div class="dd__now">
             <Image src={wallpaper} alt="" width={120} height={80} class="dd__thumb" />
             <span class="dd__text">
-              <span class="dd__artist">Frederic Edwin Church</span>
-              <span class="dd__title">Heart of the Andes</span>
+              <span class="dd__artist">{pick(church.artist, lang)}</span>
+              <span class="dd__title">{pick(church.title, lang)}</span>
             </span>
           </div>
-          <div class="dd__row"><span>Next wallpaper</span><span class="dd__k mono">⌘N</span></div>
-          <div class="dd__row"><span>Shuffle this collection</span></div>
+          <div class="dd__row"><span>{t.menu.next}</span><span class="dd__k mono">⌘N</span></div>
+          <div class="dd__row"><span>{t.menu.shuffle}</span></div>
           <div class="dd__sep"></div>
-          <div class="dd__row"><span>Collection</span><span class="dd__v">Luminist ›</span></div>
+          <div class="dd__row"><span>{t.menu.collection}</span><span class="dd__v">{t.app.collectionValue} ›</span></div>
           <div class="dd__row dd__row--toggle">
-            <span>Launch at login</span>
+            <span>{t.menu.launch}</span>
             <span class="dd__switch"><span></span></span>
           </div>
         </div>
