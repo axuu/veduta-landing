@@ -31,7 +31,6 @@ const navLinks = [
       <button
         class="bar__brand"
         type="button"
-        aria-haspopup="true"
         aria-expanded="false"
         aria-controls="veduta-menu"
         data-menu-trigger
@@ -57,8 +56,15 @@ const navLinks = [
     </div>
   </div>
 
-  <!-- The product: the Veduta menu-bar dropdown, synced to the hero rotation -->
-  <div class="menu" id="veduta-menu" role="menu" aria-label="Veduta" hidden data-menu-panel>
+  <!-- A non-interactive preview of the Veduta menu, synced to the hero rotation. -->
+  <div
+    class="menu"
+    id="veduta-menu"
+    role="group"
+    aria-label={lang === 'zh' ? 'Veduta 菜单预览' : 'A preview of the Veduta menu'}
+    hidden
+    data-menu-panel
+  >
     <div class="menu__now">
       {
         hero.map((art, i) => (
@@ -74,23 +80,15 @@ const navLinks = [
     </div>
 
     <div class="menu__group">
-      <button class="menu__item" type="button" role="menuitem">
-        <span>{t.menu.next}</span><span class="menu__key mono">⌘N</span>
-      </button>
-      <button class="menu__item" type="button" role="menuitem">
-        <span>{t.menu.shuffle}</span>
-      </button>
+      <div class="menu__item"><span>{t.menu.next}</span><span class="menu__key mono">⌘N</span></div>
+      <div class="menu__item"><span>{t.menu.shuffle}</span></div>
     </div>
 
     <div class="menu__rule"></div>
 
     <div class="menu__group">
-      <button class="menu__item" type="button" role="menuitem">
-        <span>{t.menu.collection}</span><span class="menu__val">{t.menu.collectionValue} ›</span>
-      </button>
-      <button class="menu__item" type="button" role="menuitem">
-        <span>{t.menu.interval}</span><span class="menu__val">{t.menu.intervalValue} ›</span>
-      </button>
+      <div class="menu__item"><span>{t.menu.collection}</span><span class="menu__val">{t.menu.collectionValue} ›</span></div>
+      <div class="menu__item"><span>{t.menu.interval}</span><span class="menu__val">{t.menu.intervalValue} ›</span></div>
       <div class="menu__item menu__item--toggle">
         <span>{t.menu.launch}</span>
         <span class="menu__switch" aria-hidden="true"><span></span></span>
@@ -100,12 +98,8 @@ const navLinks = [
     <div class="menu__rule"></div>
 
     <div class="menu__group">
-      <button class="menu__item menu__item--quiet" type="button" role="menuitem">
-        <span>{t.menu.reveal}</span><span class="menu__val mono">~/Pictures/VedutaLibrary</span>
-      </button>
-      <button class="menu__item menu__item--quiet" type="button" role="menuitem">
-        <span>{t.menu.quit}</span><span class="menu__key mono">⌘Q</span>
-      </button>
+      <div class="menu__item menu__item--quiet"><span>{t.menu.reveal}</span><span class="menu__val mono">~/Pictures/VedutaLibrary</span></div>
+      <div class="menu__item menu__item--quiet"><span>{t.menu.quit}</span><span class="menu__key mono">⌘Q</span></div>
     </div>
   </div>
 </header>
@@ -341,6 +335,11 @@ const navLinks = [
     display: flex;
     align-items: center;
     gap: 12px;
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-out-quint);
+  }
+  .menu__art.is-active {
+    opacity: 1;
   }
 
   .menu__thumb {
@@ -391,12 +390,12 @@ const navLinks = [
       background 0.14s,
       color 0.14s;
   }
-  button.menu__item:hover {
+  .menu__item:not(.menu__item--toggle):hover {
     background: var(--brass);
     color: var(--wall-deep);
   }
-  button.menu__item:hover .menu__key,
-  button.menu__item:hover .menu__val {
+  .menu__item:not(.menu__item--toggle):hover .menu__key,
+  .menu__item:not(.menu__item--toggle):hover .menu__val {
     color: color-mix(in oklch, var(--wall-deep) 80%, var(--brass));
   }
 
@@ -440,6 +439,20 @@ const navLinks = [
     background: var(--wall-deep);
   }
 
+  /* roomier tap targets on touch devices */
+  @media (pointer: coarse) {
+    .bar__inner {
+      height: 48px;
+    }
+    .bar__lang {
+      min-width: 44px;
+      height: 40px;
+    }
+    .bar__install {
+      min-height: 40px;
+    }
+  }
+
   @media (max-width: 760px) {
     .bar__nav,
     .bar__clock {
@@ -460,6 +473,9 @@ const navLinks = [
     .menu {
       transition: opacity 0.001s;
       transform: none;
+    }
+    .menu__art {
+      transition: none;
     }
   }
 </style>

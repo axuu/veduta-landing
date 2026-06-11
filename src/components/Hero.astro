@@ -28,7 +28,8 @@ const copyFail = lang === 'zh' ? '请按 ⌘C 复制' : 'Press ⌘C to copy';
             src={art.src}
             alt={pick(art.alt, lang)}
             sizes="100vw"
-            widths={[768, 1280, 1920, 2560]}
+            widths={[768, 1280, 1920]}
+            quality={60}
             loading={i === 0 ? 'eager' : 'lazy'}
             fetchpriority={i === 0 ? 'high' : 'auto'}
             class="hero__img"
