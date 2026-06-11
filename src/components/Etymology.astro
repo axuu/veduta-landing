@@ -1,0 +1,146 @@
+---
+import { Image } from 'astro:assets';
+import detail from '../assets/art/canaletto-piazza-san-marco.jpg';
+---
+
+<section class="etym">
+  <div class="shell etym__grid">
+    <div class="etym__text" data-reveal>
+      <p class="etym__word">
+        <span class="etym__term">veduta</span>
+        <span class="etym__pron mono">/veˈduːta/</span>
+        <span class="etym__pos">noun, Italian</span>
+      </p>
+      <p class="etym__def">
+        A detailed, faithful painting of a city or a place, made in eighteenth-century
+        Venice for travelers who wanted to carry the view home. Canaletto painted them by the
+        hundred.
+      </p>
+      <p class="etym__cn">淡景 &mdash; <span class="etym__cn-gloss">the quiet view.</span></p>
+      <p class="etym__close">
+        Three centuries on, Veduta does the same small thing: it brings the view home, to
+        your desk.
+      </p>
+    </div>
+
+    <figure class="etym__plate" data-reveal style="--reveal-delay: 120ms">
+      <div class="frame frame--tall">
+        <Image
+          src={detail}
+          alt="A detail of Canaletto's Piazza San Marco, the basilica warm in morning light."
+          widths={[420, 680, 960]}
+          sizes="(max-width: 880px) 70vw, 34vw"
+          class="frame__img"
+        />
+      </div>
+      <figcaption class="etym__cap label">
+        Canaletto, <span class="etym__cap-i">Piazza San Marco</span>, late 1720s
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .etym {
+    padding-top: var(--space-section);
+  }
+
+  .etym__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(2.5rem, 1rem + 6vw, 6rem);
+  }
+
+  .etym__text {
+    max-width: 40rem;
+  }
+
+  .etym__word {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.1rem;
+    margin-bottom: 1.6rem;
+  }
+  .etym__term {
+    font-family: var(--font-label);
+    font-style: italic;
+    font-size: var(--step-4);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .etym__pron {
+    font-size: var(--step-0);
+    color: var(--brass);
+  }
+  .etym__pos {
+    font-family: var(--font-label);
+    font-style: italic;
+    font-size: var(--step-0);
+    color: var(--ink-mute);
+  }
+
+  .etym__def {
+    font-family: var(--font-label);
+    font-size: var(--step-2);
+    line-height: 1.5;
+    font-weight: 300;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+
+  .etym__cn {
+    margin-top: 1.6rem;
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--brass);
+  }
+  .etym__cn-gloss {
+    font-family: var(--font-label);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--ink-soft);
+    font-size: 0.78em;
+  }
+
+  .etym__close {
+    margin-top: 1.8rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--hairline);
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .frame--tall {
+    max-width: 22rem;
+  }
+  .etym__cap {
+    margin-top: 1rem;
+    font-style: italic;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    text-align: center;
+  }
+  .etym__cap-i {
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 880px) {
+    .etym__grid {
+      grid-template-columns: 1fr;
+    }
+    .etym__plate {
+      max-width: 22rem;
+    }
+    .etym__cap {
+      text-align: left;
+    }
+  }
+</style>

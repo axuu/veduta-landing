@@ -1,0 +1,86 @@
+---
+const museums = [
+  'The Metropolitan Museum of Art',
+  'National Gallery of Art',
+  'The Cleveland Museum of Art',
+  'Art Institute of Chicago',
+  'Harvard Art Museums',
+];
+---
+
+<section class="sources">
+  <div class="shell">
+    <div class="sources__inner" data-reveal>
+      <p class="sources__intro label">Drawn from the open collections of</p>
+      <ul class="sources__list">
+        {
+          museums.map((m) => (
+            <li class="sources__museum">{m}</li>
+          ))
+        }
+      </ul>
+      <p class="sources__note label measure">
+        Veduta only imports works the museums have released as open access. Each image is
+        public domain or museum-provided, and its provenance travels with it in the catalog.
+        The art belongs to everyone; the app just hangs it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sources {
+    padding-top: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  }
+
+  .sources__inner {
+    display: grid;
+    gap: 1.6rem;
+    padding-top: clamp(2.5rem, 1.5rem + 3vw, 4rem);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .sources__intro {
+    font-style: italic;
+    font-size: var(--step-0);
+    color: var(--brass);
+  }
+
+  .sources__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 2rem;
+  }
+  .sources__museum {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.1rem, 0.9rem + 1vw, 1.65rem);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    position: relative;
+  }
+  .sources__museum:not(:last-child)::after {
+    content: '·';
+    position: absolute;
+    right: -1.15rem;
+    color: var(--brass);
+    font-weight: 400;
+  }
+
+  .sources__note {
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink-mute);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 620px) {
+    .sources__museum:not(:last-child)::after {
+      display: none;
+    }
+  }
+</style>

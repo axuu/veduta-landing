@@ -1,0 +1,54 @@
+---
+import type { Artwork } from '../data/artworks';
+
+interface Props {
+  art: Artwork;
+  /** dim the credit line for tighter placements */
+  compact?: boolean;
+}
+
+const { art, compact = false } = Astro.props;
+---
+
+<figcaption class:list={['wall-label', { 'wall-label--compact': compact }]}>
+  <span class="wall-label__artist">{art.artist}</span>
+  <span class="wall-label__title">{art.title}</span>
+  <span class="wall-label__meta mono">{art.date} &middot; {art.source}</span>
+</figcaption>
+
+<style>
+  .wall-label {
+    display: grid;
+    gap: 0.18em;
+    text-align: left;
+  }
+
+  .wall-label__artist {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .wall-label__title {
+    font-family: var(--font-label);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--step-0);
+    line-height: 1.3;
+    color: var(--ink-soft);
+  }
+
+  .wall-label__meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-mute);
+    margin-top: 0.2em;
+  }
+
+  .wall-label--compact .wall-label__artist,
+  .wall-label--compact .wall-label__title {
+    font-size: var(--step--1);
+  }
+</style>

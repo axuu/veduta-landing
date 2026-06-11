@@ -1,0 +1,137 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Stream once',
+    body: 'The first time a painting comes up, Veduta pulls it from a public mirror. Just that one piece, just once.',
+  },
+  {
+    n: '02',
+    title: 'Cache on disk',
+    body: 'It lands in your library as a real image file. Every time after that, there is no network at all.',
+  },
+  {
+    n: '03',
+    title: 'Rotate quietly',
+    body: 'Your wallpaper changes on the interval you choose. Shuffle a collection, or pin the one you can’t part with.',
+  },
+];
+---
+
+<section class="how" id="how">
+  <div class="shell">
+    <h2 class="section-title how__title" data-reveal>
+      Online for a moment, yours for good.
+    </h2>
+
+    <ol class="flow">
+      {
+        steps.map((s, i) => (
+          <li class="flow__step" data-reveal style={`--reveal-delay: ${i * 110}ms`}>
+            <span class="flow__node mono">{s.n}</span>
+            <h3 class="flow__step-title">{s.title}</h3>
+            <p class="flow__body label">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how {
+    padding-top: var(--space-section);
+  }
+
+  .how__title {
+    max-width: 16ch;
+    margin-bottom: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+
+  .flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 0.5rem + 4vw, 4rem);
+    position: relative;
+  }
+
+  /* the brass rail the steps hang from */
+  .flow::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 6px;
+    right: 6px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      var(--brass-hairline),
+      var(--brass) 50%,
+      var(--brass-hairline)
+    );
+  }
+
+  .flow__step {
+    display: grid;
+    gap: 0.7rem;
+    position: relative;
+  }
+
+  .flow__node {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--wall);
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    font-size: 0.78rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow__step-title {
+    font-size: var(--step-2);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-top: 0.3rem;
+  }
+
+  .flow__body {
+    font-size: var(--step-0);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+
+  @media (max-width: 760px) {
+    .flow {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-left: 0.5rem;
+    }
+    .flow::before {
+      top: 6px;
+      bottom: 6px;
+      left: 18px;
+      right: auto;
+      width: 1px;
+      height: auto;
+      background: linear-gradient(
+        to bottom,
+        var(--brass-hairline),
+        var(--brass) 50%,
+        var(--brass-hairline)
+      );
+    }
+    .flow__body {
+      max-width: 46ch;
+    }
+  }
+</style>

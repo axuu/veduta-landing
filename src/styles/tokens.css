@@ -1,0 +1,67 @@
+/* Veduta design tokens. Dark museum picture-gallery world. OKLCH throughout. */
+
+:root {
+  /* ---- Color: the wall is the color, brass is the only metal ---- */
+  --wall: oklch(0.205 0.018 172);
+  --wall-deep: oklch(0.158 0.016 172);
+  --wall-raised: oklch(0.262 0.017 172);
+  --wall-raised-2: oklch(0.305 0.016 172);
+  --wall-line: oklch(0.34 0.014 172);
+
+  --ink: oklch(0.952 0.01 86);
+  --ink-soft: oklch(0.82 0.012 86);
+  --ink-mute: oklch(0.69 0.013 86);
+
+  --brass: oklch(0.785 0.095 83);
+  --brass-bright: oklch(0.87 0.105 86);
+  --brass-deep: oklch(0.62 0.085 78);
+
+  /* derived surfaces */
+  --hairline: color-mix(in oklch, var(--ink) 12%, transparent);
+  --hairline-strong: color-mix(in oklch, var(--ink) 22%, transparent);
+  --brass-hairline: color-mix(in oklch, var(--brass) 38%, transparent);
+  --glass: color-mix(in oklch, var(--wall-deep) 72%, transparent);
+
+  /* gilt frame: never a flat band */
+  --frame-grad: linear-gradient(
+    155deg,
+    var(--brass-bright) 0%,
+    var(--brass) 28%,
+    var(--brass-deep) 62%,
+    var(--brass) 100%
+  );
+
+  /* ---- Type ---- */
+  --font-display: 'Schibsted Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-label: 'Spectral', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  /* fluid scale, ratio >= 1.25, hero <= 5.5rem */
+  --step--1: clamp(0.83rem, 0.8rem + 0.14vw, 0.92rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.34rem + 0.78vw, 2.05rem);
+  --step-3: clamp(1.85rem, 1.55rem + 1.5vw, 2.9rem);
+  --step-4: clamp(2.3rem, 1.7rem + 3vw, 4.1rem);
+  --step-5: clamp(2.8rem, 1.9rem + 4.4vw, 5.4rem);
+
+  /* ---- Space ---- */
+  --space-section: clamp(5rem, 3.5rem + 7vw, 9.5rem);
+  --gutter: clamp(1.25rem, 0.8rem + 2.2vw, 2.75rem);
+  --measure: 66ch;
+  --content-max: 1240px;
+
+  /* ---- Motion ---- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Z scale ---- */
+  --z-rail: 1;
+  --z-nav: 40;
+  --z-menu: 60;
+  --z-dialog: 80;
+  --z-toast: 100;
+
+  --radius: 4px;
+  --radius-lg: 10px;
+}

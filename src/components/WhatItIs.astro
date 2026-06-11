@@ -1,0 +1,145 @@
+---
+import { Image } from 'astro:assets';
+import canaletto from '../assets/art/canaletto-grand-canal-rialto.jpg';
+---
+
+<section class="what" id="what">
+  <div class="shell what__grid">
+    <figure class="what__plate" data-reveal>
+      <div class="frame">
+        <Image
+          src={canaletto}
+          alt="A detail of Canaletto's Grand Canal: palace facades and gondolas mirrored in still water."
+          widths={[480, 760, 1100]}
+          sizes="(max-width: 880px) 90vw, 44vw"
+          class="frame__img"
+        />
+      </div>
+      <figcaption class="what__plate-cap label">
+        Your wallpaper, a moment ago. Now it lives in <span class="mono">~/Pictures</span>.
+      </figcaption>
+    </figure>
+
+    <div class="what__copy" data-reveal style="--reveal-delay: 90ms">
+      <h2 class="section-title what__title">
+        It lives in the menu bar and keeps the collection in your Pictures folder.
+      </h2>
+      <p class="what__body label measure">
+        Veduta builds a library at <span class="mono">~/Pictures/VedutaLibrary</span>: a
+        catalog, the collections you choose, and the paintings themselves. When a piece
+        isn&rsquo;t on your Mac yet, it streams once from a public mirror, caches it, and from
+        then on it is yours, offline.
+      </p>
+      <ul class="what__list">
+        <li>
+          <span class="what__k">No account, no cloud</span>
+          <span class="what__v label">Nothing to sign in to. Nothing leaves your machine.</span>
+        </li>
+        <li>
+          <span class="what__k">Yours on disk</span>
+          <span class="what__v label">Real image files you can open, copy, or back up like any other.</span>
+        </li>
+        <li>
+          <span class="what__k">Quiet by design</span>
+          <span class="what__v label">A single menu-bar icon. No dock clutter, no notifications, no telemetry.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .what {
+    padding-top: var(--space-section);
+  }
+
+  .what__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 1rem + 5vw, 5rem);
+  }
+
+  .what__plate {
+    margin: 0;
+  }
+
+  /* gilt frame, never a flat band */
+  .frame {
+    position: relative;
+    padding: clamp(8px, 1vw, 14px);
+    border-radius: 3px;
+    background: var(--frame-grad);
+    box-shadow:
+      0 1px 0 0 var(--brass-bright) inset,
+      0 30px 60px -28px rgba(0, 0, 0, 0.9),
+      0 10px 24px -16px rgba(0, 0, 0, 0.7);
+  }
+  .frame::after {
+    content: '';
+    position: absolute;
+    inset: clamp(8px, 1vw, 14px);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+  }
+  .frame__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1px;
+  }
+
+  .what__plate-cap {
+    margin-top: 1.1rem;
+    font-style: italic;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+  }
+
+  .what__title {
+    max-width: 18ch;
+  }
+
+  .what__body {
+    margin-top: 1.4rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .what__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.2rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .what__list li {
+    display: grid;
+    gap: 0.15rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .what__k {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: var(--step-0);
+  }
+  .what__v {
+    color: var(--ink-mute);
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+  .mono {
+    color: var(--brass);
+  }
+
+  @media (max-width: 880px) {
+    .what__grid {
+      grid-template-columns: 1fr;
+    }
+    .what__plate {
+      max-width: 32rem;
+    }
+  }
+</style>

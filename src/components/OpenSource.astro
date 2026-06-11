@@ -1,0 +1,179 @@
+---
+const points = [
+  {
+    title: 'Two clean parts',
+    body: 'A Python pipeline that imports from museum open-access APIs, and a Swift menu-bar app that shows the result. Read or fork either one.',
+  },
+  {
+    title: 'Run your own mirror',
+    body: 'Host the library on your own box and point the app at it. The streaming origin is just a static file server.',
+  },
+  {
+    title: 'Bring your own keys',
+    body: 'Most sources are fully open. Harvard wants a free API key; everything else imports without one.',
+  },
+];
+---
+
+<section class="oss" id="open-source">
+  <div class="shell oss__grid">
+    <div class="oss__intro" data-reveal>
+      <h2 class="section-title">Open source, all the way down.</h2>
+      <p class="oss__lede label measure">
+        Nothing here is a black box. Install the signed app with one command, or clone the
+        repo and build the whole library from the source museums yourself.
+      </p>
+
+      <div class="terminal" data-reveal style="--reveal-delay: 100ms">
+        <div class="terminal__bar" aria-hidden="true">
+          <span class="terminal__dot"></span>
+          <span class="terminal__dot"></span>
+          <span class="terminal__dot"></span>
+          <span class="terminal__name mono">zsh — veduta</span>
+        </div>
+        <pre class="terminal__body mono"><code><span class="c">{'# install the signed, notarized app'}</span>
+<span class="p">$</span> brew install --cask giraphant/tap/veduta
+
+<span class="c">{'# or build the library from source'}</span>
+<span class="p">$</span> git clone https://github.com/giraphant/veduta
+<span class="p">$</span> make import-met
+<span class="p">$</span> make import-cleveland
+<span class="o">  imported 1,204 works · cached to ~/Pictures/VedutaLibrary</span></code></pre>
+      </div>
+      <p class="oss__req label">
+        Requires macOS 13+, Swift 5.9+ and Python 3.11+ to build. The app alone needs none of
+        that.
+      </p>
+    </div>
+
+    <ul class="oss__points" data-reveal style="--reveal-delay: 80ms">
+      {
+        points.map((p) => (
+          <li class="oss__point">
+            <h3 class="oss__point-title">{p.title}</h3>
+            <p class="oss__point-body label">{p.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .oss {
+    padding-top: var(--space-section);
+  }
+
+  .oss__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 1rem + 5vw, 5rem);
+    align-items: start;
+  }
+
+  .oss__intro {
+    min-width: 0;
+  }
+
+  .oss__lede {
+    margin-top: 1.3rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .terminal {
+    margin-top: 2.2rem;
+    max-width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--wall-deep);
+    border: 1px solid var(--hairline-strong);
+    box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.9);
+  }
+  .terminal__bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 13px;
+    background: color-mix(in oklch, var(--wall-raised) 70%, transparent);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .terminal__dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--wall-line);
+  }
+  .terminal__dot:nth-child(1) {
+    background: color-mix(in oklch, var(--brass-deep) 70%, #c1543f);
+  }
+  .terminal__dot:nth-child(2) {
+    background: var(--brass-deep);
+  }
+  .terminal__dot:nth-child(3) {
+    background: color-mix(in oklch, var(--brass) 80%, #5c8a4a);
+  }
+  .terminal__name {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+  }
+  .terminal__body {
+    margin: 0;
+    padding: 1.1rem 1.3rem 1.3rem;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: var(--ink);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .terminal__body .p {
+    color: var(--brass);
+    user-select: none;
+    padding-right: 0.4rem;
+  }
+  .terminal__body .c {
+    color: var(--ink-mute);
+  }
+  .terminal__body .o {
+    color: var(--brass-bright);
+  }
+
+  .oss__req {
+    margin-top: 1.4rem;
+    font-style: italic;
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+  }
+
+  .oss__points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.6rem;
+  }
+  .oss__point {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .oss__point-title {
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .oss__point-body {
+    font-size: var(--step-0);
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 920px) {
+    .oss__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

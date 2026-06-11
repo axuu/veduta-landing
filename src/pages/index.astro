@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import MenuBar from '../components/MenuBar.astro';
+import Hero from '../components/Hero.astro';
+import WhatItIs from '../components/WhatItIs.astro';
+import Gallery from '../components/Gallery.astro';
+import Sources from '../components/Sources.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import AppDetail from '../components/AppDetail.astro';
+import OpenSource from '../components/OpenSource.astro';
+import Etymology from '../components/Etymology.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base>
+  <MenuBar />
+  <main>
+    <Hero />
+    <WhatItIs />
+    <Gallery />
+    <Sources />
+    <HowItWorks />
+    <AppDetail />
+    <OpenSource />
+    <Etymology />
+    <Footer />
+  </main>
+</Base>
+
+<script>
+  // Copy-to-clipboard for any [data-copy] element, with a shared toast.
+  const toast = document.querySelector<HTMLElement>('[data-toast]');
+  let toastTimer = 0;
+
+  const showToast = (msg: string) => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-shown');
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => toast.classList.remove('is-shown'), 2200);
+  };
+
+  for (const el of document.querySelectorAll<HTMLElement>('[data-copy]')) {
+    el.addEventListener('click', async () => {
+      const text = el.dataset.copy ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        el.classList.add('is-copied');
+        window.setTimeout(() => el.classList.remove('is-copied'), 1400);
+        showToast('Copied to clipboard');
+      } catch {
+        showToast('Press ⌘C to copy');
+      }
+    });
+  }
+</script>

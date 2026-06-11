@@ -1,0 +1,443 @@
+---
+import { Image } from 'astro:assets';
+import { hero } from '../data/artworks';
+
+const navLinks = [
+  { label: 'The library', href: '#library' },
+  { label: 'How it works', href: '#how' },
+  { label: 'Open source', href: '#open-source' },
+];
+---
+
+<header class="bar" data-bar>
+  <div class="bar__inner">
+    <div class="bar__left">
+      <span class="bar__glyph" aria-hidden="true">
+        <svg viewBox="0 0 20 20" width="14" height="14">
+          <rect x="3.5" y="2.5" width="13" height="15" rx="0.8" fill="none" stroke="currentColor" stroke-width="1.3" />
+          <path d="M5 14 L8.2 9 L10.4 11.6 L12.6 7.6 L15 14 Z" fill="currentColor" />
+          <circle cx="12.4" cy="6.4" r="1.1" fill="currentColor" />
+        </svg>
+      </span>
+
+      <button
+        class="bar__brand"
+        type="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="veduta-menu"
+        data-menu-trigger
+      >
+        <span class="bar__name">Veduta</span>
+        <span class="bar__cn" aria-hidden="true">淡景</span>
+        <svg class="bar__caret" viewBox="0 0 10 6" width="9" height="6" aria-hidden="true">
+          <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+        </svg>
+      </button>
+
+      <nav class="bar__nav" aria-label="Sections">
+        {navLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </div>
+
+    <div class="bar__right">
+      <span class="bar__status" aria-hidden="true">
+        <svg viewBox="0 0 26 14" width="22" height="12">
+          <rect x="0.5" y="2" width="17" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.55" />
+          <rect x="2" y="3.5" width="13" height="7" rx="1" fill="currentColor" opacity="0.8" />
+          <rect x="18.5" y="4.5" width="2" height="5" rx="1" fill="currentColor" opacity="0.55" />
+        </svg>
+      </span>
+      <span class="bar__clock mono" aria-hidden="true">Tue&nbsp;9:41</span>
+      <a class="bar__install" href="#get">Install</a>
+    </div>
+  </div>
+
+  <!-- The product: the Veduta menu-bar dropdown, synced to the hero rotation -->
+  <div class="menu" id="veduta-menu" role="menu" aria-label="Veduta" hidden data-menu-panel>
+    <div class="menu__now">
+      {
+        hero.map((art, i) => (
+          <div class="menu__art rot-item" data-rot={i} class:list={[{ 'is-active': i === 0 }]}>
+            <Image src={art.src} alt="" width={96} height={64} class="menu__thumb" />
+            <span class="menu__art-text">
+              <span class="menu__art-artist">{art.artist}</span>
+              <span class="menu__art-title">{art.title}</span>
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="menu__group">
+      <button class="menu__item" type="button" role="menuitem">
+        <span>Next wallpaper</span><span class="menu__key mono">⌘N</span>
+      </button>
+      <button class="menu__item" type="button" role="menuitem">
+        <span>Shuffle this collection</span>
+      </button>
+    </div>
+
+    <div class="menu__rule"></div>
+
+    <div class="menu__group">
+      <button class="menu__item" type="button" role="menuitem">
+        <span>Collection</span><span class="menu__val">Venetian Vedute ›</span>
+      </button>
+      <button class="menu__item" type="button" role="menuitem">
+        <span>Change every</span><span class="menu__val">30 minutes ›</span>
+      </button>
+      <div class="menu__item menu__item--toggle">
+        <span>Launch at login</span>
+        <span class="menu__switch" aria-hidden="true"><span></span></span>
+      </div>
+    </div>
+
+    <div class="menu__rule"></div>
+
+    <div class="menu__group">
+      <button class="menu__item menu__item--quiet" type="button" role="menuitem">
+        <span>Reveal in Finder</span><span class="menu__val mono">~/Pictures/VedutaLibrary</span>
+      </button>
+      <button class="menu__item menu__item--quiet" type="button" role="menuitem">
+        <span>Quit Veduta</span><span class="menu__key mono">⌘Q</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const trigger = document.querySelector<HTMLButtonElement>('[data-menu-trigger]');
+  const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+
+  if (trigger && panel) {
+    const open = () => {
+      panel.hidden = false;
+      // next frame so the transition runs
+      requestAnimationFrame(() => panel.classList.add('is-open'));
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      panel.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      const done = () => {
+        if (!panel.classList.contains('is-open')) panel.hidden = true;
+        panel.removeEventListener('transitionend', done);
+      };
+      panel.addEventListener('transitionend', done);
+    };
+    const toggle = () =>
+      trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+    document.addEventListener('click', (e) => {
+      if (
+        trigger.getAttribute('aria-expanded') === 'true' &&
+        !panel.contains(e.target as Node)
+      )
+        close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        close();
+        trigger.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    background: color-mix(in oklch, var(--wall-deep) 78%, transparent);
+    backdrop-filter: saturate(1.4) blur(16px);
+    -webkit-backdrop-filter: saturate(1.4) blur(16px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 38px;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(0.85rem, 0.4rem + 1.6vw, 1.6rem);
+    font-size: 0.82rem;
+  }
+
+  .bar__left {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .bar__glyph {
+    display: grid;
+    place-items: center;
+    color: var(--brass);
+    padding-right: 0.25rem;
+  }
+
+  .bar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    padding: 0.28rem 0.5rem;
+    border-radius: var(--radius);
+    color: var(--ink);
+    transition: background 0.2s var(--ease-out-quint);
+  }
+
+  .bar__brand:hover,
+  .bar__brand[aria-expanded='true'] {
+    background: color-mix(in oklch, var(--brass) 18%, transparent);
+  }
+
+  .bar__name {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .bar__cn {
+    color: var(--brass);
+    font-size: 0.78em;
+    letter-spacing: 0.08em;
+  }
+
+  .bar__caret {
+    color: var(--ink-mute);
+    transition: transform 0.25s var(--ease-out-quint);
+  }
+  .bar__brand[aria-expanded='true'] .bar__caret {
+    transform: rotate(180deg);
+  }
+
+  .bar__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    margin-left: 0.4rem;
+  }
+
+  .bar__nav a {
+    padding: 0.28rem 0.62rem;
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    transition:
+      color 0.2s,
+      background 0.2s;
+  }
+  .bar__nav a:hover {
+    color: var(--ink);
+    background: var(--hairline);
+  }
+
+  .bar__right {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .bar__status {
+    display: grid;
+    place-items: center;
+  }
+
+  .bar__clock {
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+  }
+
+  .bar__install {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.32rem 0.85rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--wall-deep);
+    background: var(--brass);
+    transition:
+      background 0.2s,
+      transform 0.2s var(--ease-out-quint);
+  }
+  .bar__install:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  /* ---------- the dropdown product demo ---------- */
+  .menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: clamp(0.85rem, 0.4rem + 1.6vw, 1.6rem);
+    width: min(340px, calc(100vw - 1.4rem));
+    padding: 6px;
+    border-radius: 12px;
+    background: color-mix(in oklch, var(--wall-raised) 92%, transparent);
+    backdrop-filter: saturate(1.5) blur(26px);
+    -webkit-backdrop-filter: saturate(1.5) blur(26px);
+    border: 1px solid var(--hairline-strong);
+    box-shadow:
+      0 1px 0 0 color-mix(in oklch, var(--ink) 8%, transparent) inset,
+      0 26px 60px -22px rgba(0, 0, 0, 0.7),
+      0 8px 20px -12px rgba(0, 0, 0, 0.6);
+    transform-origin: top left;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+    transition:
+      opacity 0.22s var(--ease-out-quint),
+      transform 0.26s var(--ease-out-expo);
+  }
+  .menu.is-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu__now {
+    position: relative;
+    display: grid;
+    padding: 8px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    background: color-mix(in oklch, var(--wall-deep) 55%, transparent);
+    min-height: 72px;
+  }
+
+  .menu__art {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .menu__thumb {
+    width: 64px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow:
+      0 0 0 1px var(--brass-hairline),
+      0 4px 12px -4px rgba(0, 0, 0, 0.8);
+  }
+
+  .menu__art-text {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+  .menu__art-artist {
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--ink);
+  }
+  .menu__art-title {
+    font-family: var(--font-label);
+    font-style: italic;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    color: var(--ink-mute);
+  }
+
+  .menu__group {
+    display: grid;
+    padding: 2px;
+  }
+
+  .menu__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.4rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-align: left;
+    transition:
+      background 0.14s,
+      color 0.14s;
+  }
+  button.menu__item:hover {
+    background: var(--brass);
+    color: var(--wall-deep);
+  }
+  button.menu__item:hover .menu__key,
+  button.menu__item:hover .menu__val {
+    color: color-mix(in oklch, var(--wall-deep) 80%, var(--brass));
+  }
+
+  .menu__key,
+  .menu__val {
+    color: var(--ink-mute);
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+  .menu__item--quiet {
+    color: var(--ink-mute);
+  }
+  .menu__item--quiet .menu__val {
+    font-size: 0.7rem;
+  }
+
+  .menu__rule {
+    height: 1px;
+    margin: 5px 8px;
+    background: var(--hairline);
+  }
+
+  .menu__item--toggle {
+    cursor: default;
+  }
+  .menu__switch {
+    width: 30px;
+    height: 17px;
+    border-radius: 999px;
+    background: var(--brass);
+    position: relative;
+    flex: none;
+  }
+  .menu__switch span {
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--wall-deep);
+  }
+
+  @media (max-width: 760px) {
+    .bar__nav,
+    .bar__status,
+    .bar__clock {
+      display: none;
+    }
+    .bar__brand {
+      pointer-events: none;
+    }
+    .bar__caret {
+      display: none;
+    }
+    .menu {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu {
+      transition: opacity 0.001s;
+      transform: none;
+    }
+  }
+</style>
