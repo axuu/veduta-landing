@@ -12,7 +12,7 @@ export const localePath = (lang: Lang): string => (lang === 'en' ? '/' : '/zh/')
 export const ui = {
   en: {
     meta: {
-      title: 'Veduta · 淡景 — Museum art on your Mac desktop',
+      title: 'Veduta · 淡景: Museum art on your Mac desktop',
       desc: 'Veduta is a local-first, open-source macOS menu-bar app that rotates public-domain museum paintings as your wallpaper. One brew command, no account, works offline.',
       langName: 'English',
       toggle: '中',
@@ -38,7 +38,7 @@ export const ui = {
     hero: {
       titleA: 'The world’s museums,',
       titleB: 'hung on your desktop.',
-      lede: 'Veduta is a local-first menu-bar app for macOS. It rotates public-domain paintings across your wallpaper, keeps the library in your Pictures folder, and runs with no account and no connection.',
+      lede: 'Veduta is a local-first menu-bar app for macOS. It rotates public-domain paintings across your wallpaper, keeps the library in your Pictures folder, and works offline once a painting is cached.',
       github: 'View on GitHub',
       fine: 'Requires macOS 13 or later. Free and open source.',
       onView: 'On view now',
@@ -50,9 +50,9 @@ export const ui = {
       body: 'Veduta builds a library at <span class="mono">~/Pictures/VedutaLibrary</span>: a catalog, the collections you choose, and the paintings themselves. When a piece isn’t on your Mac yet, it streams once from a public mirror, caches it, and from then on it is yours, offline.',
       cap: 'Your wallpaper, a moment ago. Now it lives in <span class="mono">~/Pictures</span>.',
       items: [
-        { k: 'No account, no cloud', v: 'Nothing to sign in to. Nothing leaves your machine.' },
+        { k: 'No account, no cloud', v: 'There is nothing to sign in to, and the library stays on your Mac.' },
         { k: 'Yours on disk', v: 'Real image files you can open, copy, or back up like any other.' },
-        { k: 'Quiet by design', v: 'A single menu-bar icon. No dock clutter, no notifications, no telemetry.' },
+        { k: 'Quiet by design', v: 'A single menu-bar icon that stays out of the dock and keeps to itself.' },
       ],
     },
     gallery: {
@@ -117,7 +117,7 @@ export const ui = {
     },
     get: {
       title: 'Bring the view home.',
-      sub: 'One command. No account. macOS 13 and up.',
+      sub: 'One command, no account, macOS 13 and up.',
       github: 'View on GitHub',
     },
     footer: {
@@ -136,7 +136,7 @@ export const ui = {
 
   zh: {
     meta: {
-      title: 'Veduta · 淡景 — 让博物馆藏画成为你的 Mac 桌面',
+      title: 'Veduta · 淡景：让博物馆藏画成为你的 Mac 桌面',
       desc: 'Veduta 是一款 local-first 的开源 macOS 菜单栏应用，把公共领域的博物馆画作轮换成你的桌面壁纸。一条 brew 命令，无需账号，可离线使用。',
       langName: '中文',
       toggle: 'EN',
@@ -162,7 +162,7 @@ export const ui = {
     hero: {
       titleA: '把全世界的博物馆，',
       titleB: '挂上你的桌面。',
-      lede: 'Veduta 是一款 macOS 菜单栏应用，local-first：它把公共领域的画作轮换为你的壁纸，藏品就存在你的"图片"文件夹里，无需账号、不联网也能用。',
+      lede: 'Veduta 是一款 macOS 菜单栏应用，local-first：它把公共领域的画作轮换为你的壁纸，藏品就存在你的"图片"文件夹里，画作缓存之后即可离线观看。',
       github: '在 GitHub 查看',
       fine: '需要 macOS 13 或更新版本。免费、开源。',
       onView: '正在展出',
@@ -174,9 +174,9 @@ export const ui = {
       body: 'Veduta 在 <span class="mono">~/Pictures/VedutaLibrary</span> 建一座本地藏品库：一份目录、你挑选的合集，以及画作本身。某幅画还没在你的 Mac 上时，它只从公共镜像取一次、缓存下来，从此便归你所有，离线可看。',
       cap: '刚才还是你的壁纸，如今已存在 <span class="mono">~/Pictures</span> 里。',
       items: [
-        { k: '无账号，无云端', v: '没有任何东西要登录，也没有任何东西离开你的机器。' },
+        { k: '无账号，无云端', v: '没有需要登录的东西，藏品库始终留在你的 Mac 上。' },
         { k: '落在你的硬盘上', v: '是真实的图片文件，可以像别的文件一样打开、复制、备份。' },
-        { k: '生来安静', v: '只有一个菜单栏图标。不占程序坞，无通知，无遥测。' },
+        { k: '生来安静', v: '只有一个菜单栏图标，不进程序坞，也不来打扰你。' },
       ],
     },
     gallery: {

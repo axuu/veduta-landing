@@ -4,6 +4,8 @@ dist/
 node_modules/
 # generated types
 .astro/
+# impeccable local working state (critique snapshots, live config)
+.impeccable/
 # logs
 npm-debug.log*
 # os

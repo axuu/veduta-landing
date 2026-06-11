@@ -145,6 +145,26 @@ const navLinks = [
       }
     });
   }
+
+  // Scroll-spy: mark the nav link whose section is at the reading line.
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.bar__nav a'));
+  const byHref = new Map(navLinks.map((a) => [a.getAttribute('href'), a]));
+  const sections = navLinks
+    .map((a) => document.querySelector(a.getAttribute('href') || ''))
+    .filter((el): el is Element => !!el);
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const link = byHref.get('#' + e.target.id);
+          if (link) link.classList.toggle('is-current', e.isIntersecting);
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    for (const s of sections) spy.observe(s);
+  }
 </script>
 
 <style>
@@ -236,6 +256,17 @@ const navLinks = [
   .bar__nav a:hover {
     color: var(--ink);
     background: var(--hairline);
+  }
+  .bar__nav a.is-current {
+    color: var(--ink);
+  }
+  .bar__nav a.is-current::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 2px;
+    border-radius: 2px;
+    background: var(--brass);
   }
 
   .bar__right {
